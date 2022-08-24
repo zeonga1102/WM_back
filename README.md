@@ -89,3 +89,4 @@ if '<' in data.get('content'):
 # 🌠Credit
 * 프로젝트에 사용된 모든 가구 벡터는 <a href='https://kr.freepik.com/author/macrovector'>macrovector - kr.freepik.com가 제작함</a>
 * <a href="https://www.flaticon.com/free-icons/planet" title="planet icons">Planet icons created by Eucalyp - Flaticon</a>
+* 딥페이크 코드 <a href="https://github.com/AliaksandrSiarohin/first-order-model"><img src="https://img.shields.io/badge/Github-000000?style=flat-square&logo=github&logoColor=white"/></a>
