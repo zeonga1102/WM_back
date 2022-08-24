@@ -3,7 +3,6 @@
 딥페이크를 이용하여 움직이는 사진을 생성, 지구 밖 행성으로 이주한 사람들의 시민권을 만들어주는 웹사이트
 
 커뮤니티 기능 및 마이 페이지에서 방 꾸미는 기능 등
-***
 # ⭐Intro
 * 다른 행성들로 이주해서 생활한다는 컨셉의 커뮤니티
 * 딥페이크를 이용해서 사진을 움직이게 만들어줌
@@ -11,7 +10,6 @@
 * **개발 인원(4명)**: 김동근, 노을, 이정아, 이현경
 * **Team** <a href="https://github.com/cmjcum/WM_back"><img src="https://img.shields.io/badge/Github-000000?style=flat-square&logo=github&logoColor=white"/></a>
 * **S.A** <a href="https://cold-charcoal.tistory.com/118">블로그로 이동(☞ﾟヮﾟ)☞</a>
-***
 # 🪐Project
 ### Frontend Repository
 <a href="https://github.com/zeonga1102/WM_front"><img src="https://img.shields.io/badge/Github-000000?style=flat-square&logo=github&logoColor=white"/></a>
@@ -76,11 +74,18 @@ Seralizer를 이용해 현재 유저가 방을 꾸민 내용을 저장합니다.
 
 ### ERD
 ![make migrations (6)](https://user-images.githubusercontent.com/71905164/182602214-7d8cf839-76d6-4d30-af03-99d5f9481137.png)
-***
 # 🛠Troubleshooting
-***
+### XSS 공격 대응
+처음 배포를 한 상태에서는 XSS 공격 가능성을 전혀 고려하지 못해 우리 웹사이트가 XSS 공격을 받았습니다. 보통 우리가 넣지 않은 alert을 띄우는 정도의 공격이었지만 아예 페이지에 접근이 안 되게 하는 경우도 있었습니다.<br>
+XSS 공격에 대응하는 방법은 많지만 우리는 백엔드에서 게시글 등 사용자가 조회할 수 있는 텍스트들을 저장할 때 부등호 기호(<, >)를 전부 html 특수문자 코드로(\&lt;, \&gt;) 바꾸어 저장했습니다. Seralizer를 통해 저장할 때 validator를 커스텀 해 replace 함수로 문자열을 바꿔주었습니다.
+```python
+content_data = data.get('content')
+if '<' in data.get('content'):
+  content_data = content_data.replace('<', '&lt;')
+  if '>' in data.get('content'):
+    data['content'] = content_data.replace('>', '&gt;')
+```
 # 🖋회고
-***
 # 🌠Credit
 * 프로젝트에 사용된 모든 가구 벡터는 <a href='https://kr.freepik.com/author/macrovector'>macrovector - kr.freepik.com가 제작함</a>
 * <a href="https://www.flaticon.com/free-icons/planet" title="planet icons">Planet icons created by Eucalyp - Flaticon</a>
