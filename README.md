@@ -75,7 +75,7 @@ Seralizer를 이용해 현재 유저가 방을 꾸민 내용을 저장합니다.
 ### ERD
 ![make migrations (6)](https://user-images.githubusercontent.com/71905164/182602214-7d8cf839-76d6-4d30-af03-99d5f9481137.png)
 # 🛠Troubleshooting
-### XSS 공격 대응
+### 1. XSS 공격 대응
 처음 배포를 한 상태에서는 XSS 공격 가능성을 전혀 고려하지 못해 우리 웹사이트가 XSS 공격을 받았습니다. 보통 우리가 넣지 않은 alert을 띄우는 정도의 공격이었지만 아예 페이지에 접근이 안 되게 하는 경우도 있었습니다.<br>
 XSS 공격에 대응하는 방법은 많지만 우리는 백엔드에서 게시글 등 사용자가 조회할 수 있는 텍스트들을 저장할 때 부등호 기호(<, >)를 전부 html 특수문자 코드로(\&lt;, \&gt;) 바꾸어 저장했습니다. Seralizer를 통해 저장할 때 validator를 커스텀 해 replace 함수로 문자열을 바꿔주었습니다.
 ```python
@@ -85,7 +85,19 @@ if '<' in data.get('content'):
   if '>' in data.get('content'):
     data['content'] = content_data.replace('>', '&gt;')
 ```
+
+### 2. OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized
+라이브러리를 중복 및 충돌로 인해 발생하는 오류입니다. 아래 코드를 추가하여 중복을 허용해서 해결했습니다.
+```python
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+```
+
 # 🖋회고
+이번 프로젝트는 배포를 하고 실제 사용자들의 피드백을 받기까지 했다. 피드백 받기 전에는 무슨 내용을 적어주실지 긴장됐는데 다들 너무 좋게 써주셨다. 프로젝트를 만들었을 때 결과에 대한 피드백은 받아봤지만 이용 후기에 대한 피드백은 처음이라 신기했고 미처 발견 못한 버그나 신경쓰지 못한 해킹의 위험 등을 제보해주셔서 감사했다. 그리고 UI/UX 적인 측면도 많이들 수정 방향을 제시해주셔서 최종 결과물이 좋아진 것 같다.<br>
+특히 실제로 XSS 공격을 당했을 때는 당황스러웠다. 어렵지 않은 수준의 공격이라는 것을 알고는 있었지만 겪어본 적이 없어서 프로젝트를 하는동안 해킹에 대한 가능성을 전혀 고려하지 못했다. 역시 직접 겪어보는게 중요한 것 같다. 앞으로는 절대 공격 가능성을 까먹지 않을 것 같다. 그리고 UI나 사이트 사용 방법 등에 대한 피드백도 예상 못했다. 너무 우리가 우리 프로젝트에 매몰되어 있었나 싶었다. 덕분에 프로젝트를 객관적으로 볼 수 있는 기회가 생겼고 이래서 실제 사용자들한테 피드백을 받는게 중요한가 생각했다.<br>
+기본적인 커뮤니티 기능에 우리만의 특색을 더하고자 이주라는 컨셉에 맞춰 방을 꾸밀 수 있는 기능을 넣었는데 구현에 시간이 꽤 들었다. 중요하지 않은 기능에 너무 많은 시간을 쓴건 아닐까 싶었는데 피드백을 받아보니 반응이 생각보다 너무 좋아서 뿌듯했다.<br>
+**[팀 회고 보러가기(☞ﾟヮﾟ)☞](https://cold-charcoal.tistory.com/144)**
 # 🌠Credit
 * 프로젝트에 사용된 모든 가구 벡터는 <a href='https://kr.freepik.com/author/macrovector'>macrovector - kr.freepik.com가 제작함</a>
 * <a href="https://www.flaticon.com/free-icons/planet" title="planet icons">Planet icons created by Eucalyp - Flaticon</a>
