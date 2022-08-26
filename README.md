@@ -87,7 +87,7 @@ if '<' in data.get('content'):
 ```
 
 ### 2. OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized
-라이브러리를 중복 및 충돌로 인해 발생하는 오류입니다. 아래 코드를 추가하여 중복을 허용해서 해결했습니다.
+라이브러리 중복 및 충돌로 인해 발생하는 오류입니다. 아래 코드를 추가하여 중복을 허용해서 해결했습니다.
 ```python
 import os
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
